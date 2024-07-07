@@ -4,11 +4,11 @@ pg.PAUSE = 0.4
 
 def abrir(nome_app):
     pg.press('winleft')
-    pg.typewrite(nome_app)
+    escrever(nome_app)
     enter()
     pg.sleep(1)
 
-escrever = pg.typewrite
+escrever = pg.write
 
 def pesquisar(texto):
     escrever(texto)
