@@ -18,7 +18,6 @@ def pesquisar(texto):
 def enter():
     pg.press('enter')
 
-
 # Abre o Google Chrome
 abrir('Google Chrome')
 
