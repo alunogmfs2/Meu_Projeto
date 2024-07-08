@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Calculadora(object):
     def setupUi(self, Calculadora):
         Calculadora.setObjectName("Calculadora")
-        Calculadora.resize(400, 550)
+        Calculadora.resize(400, 650)
         self.centralwidget = QtWidgets.QWidget(Calculadora)
         self.centralwidget.setObjectName("centralwidget")
         self.Zero = QtWidgets.QPushButton(self.centralwidget, clicked=lambda: self.zero()) # type: ignore
@@ -126,6 +126,16 @@ class Ui_Calculadora(object):
         self.Menos.setObjectName("Menos")
         self.Somado = QtWidgets.QPushButton(self.centralwidget, clicked=lambda: self.somado())  # type: ignore
         self.Somado.setGeometry(QtCore.QRect(300, 100, 100, 100))
+        self.CE = QtWidgets.QPushButton(self.centralwidget, clicked=lambda: self.ce()) # type: ignore
+        self.CE.setGeometry(QtCore.QRect(0, 500, 400, 100))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(12)
+        self.CE.setFont(font)
+        self.CE.setAutoFillBackground(False)
+        self.CE.setStyleSheet("")
+        self.CE.setText("CE")
+        self.CE.setObjectName("CE")
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(12)
@@ -157,6 +167,7 @@ class Ui_Calculadora(object):
 
         self.retranslateUi(Calculadora)
         QtCore.QMetaObject.connectSlotsByName(Calculadora)
+        self.conta = list()
 
     def zero(self):
         texto = self.Resultado.text()
@@ -191,19 +202,71 @@ class Ui_Calculadora(object):
     def ponto(self):
         texto = self.Resultado.text()
         self.Resultado.setText(f"{texto}.")
-    def igual(self):
-        pass
+    def igual(self): 
+        self.conta.append(float(self.Resultado.text()))
+        self.Resultado.clear()	
+        operacoes_n = list()
+        operacoes_d = list()
+        for valor in self.conta:
+            try:
+                int(valor)
+            except:
+                if valor == "*" or valor == '/':
+                    operacoes_d.append(valor)
+                else:
+                    operacoes_n.append(valor)
+
+        while "*" in self.conta or "/" in self.conta:
+            for i, opp in enumerate(self.conta):
+                if opp == "*":
+                    self.conta[i] = self.conta[i-1] * self.conta[i+1]
+                    del self.conta[i-1]
+                    del self.conta[i]
+                    break
+                elif opp == "/":
+                    self.conta[i] = self.conta[i-1] / self.conta[i+1]
+                    del self.conta[i-1]
+                    del self.conta[i]
+                    break
+
+        while "+" in self.conta or "-" in self.conta:
+            for i, opp in enumerate(self.conta):
+                if opp == "+":
+                    self.conta[i] = self.conta[i-1] + self.conta[i+1]
+                    del self.conta[i-1]
+                    del self.conta[i]
+                    break
+                elif opp == "-":
+                    self.conta[i] = self.conta[i-1] - self.conta[i+1]
+                    del self.conta[i-1]
+                    del self.conta[i]
+                    break
+
+        if round(self.conta[0]) == self.conta[0]:
+            self.Resultado.setText(str(round(self.conta[0])))
+        else:
+            self.Resultado.setText(str(self.conta[0]))
+        self.conta = list()
     def dividido(self):
-        pass
-    def multiplicado(self):
-        pass
-    def menos(self):
-        pass
-    def somado(self):
-        global acao
-        nums = list()
-        nums.append(self.Resultado.text())
+        self.conta.append(float(self.Resultado.text()))
+        self.conta.append("/")
         self.Resultado.setText("")
+    def multiplicado(self):
+        self.conta.append(float(self.Resultado.text()))
+        self.conta.append("*")
+        self.Resultado.clear()
+    def menos(self):
+        self.conta.append(float(self.Resultado.text()))
+        self.conta.append("-")
+        self.Resultado.clear()
+    def somado(self):
+        self.conta.append(float(self.Resultado.text()))
+        self.conta.append("+")
+        self.Resultado.clear()
+
+    def ce(self):
+        self.Resultado.clear()
+        self.conta.clear()
     def retranslateUi(self, Calculadora):
         _translate = QtCore.QCoreApplication.translate
         Calculadora.setWindowTitle(_translate("Calculadora", "Calculadora"))
