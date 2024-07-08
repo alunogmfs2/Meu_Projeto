@@ -203,7 +203,10 @@ class Ui_Calculadora(object):
         texto = self.Resultado.text()
         self.Resultado.setText(f"{texto}.")
     def igual(self): 
-        self.conta.append(float(self.Resultado.text()))
+        try:
+            self.conta.append(float(self.Resultado.text()))
+        except:
+            return False
         self.Resultado.clear()	
         operacoes_n = list()
         operacoes_d = list()
