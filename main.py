@@ -57,6 +57,7 @@ class Modos(QMainWindow):
         self.label = QLabel(self)
         self.label.setText("Esta é a segunda subjanela.")
         self.label.move(100, 100)
+        self.label.adjustSize()
 
 
 # Initialize the App
