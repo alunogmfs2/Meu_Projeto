@@ -1,0 +1,1 @@
+self.button.clicked.connect(self.abrir_sub)
