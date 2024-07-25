@@ -45,4 +45,5 @@ def modos_f():
 
 bem_vindo_f()
 
-bem_vindo.mainloop()
+if __name__ == '__main__':
+    bem_vindo.mainloop()
