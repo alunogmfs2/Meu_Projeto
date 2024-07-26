@@ -1,5 +1,4 @@
 import customtkinter
-from customtkinter import CTk
 
 
 def abrir_fechar(abrir, fechar):
