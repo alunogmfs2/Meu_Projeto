@@ -1,5 +1,6 @@
 import customtkinter
-
+import modos
+from modos import modos_l
 
 def abrir_fechar(abrir, fechar):
     fechar.destroy()
@@ -18,6 +19,8 @@ x = (lj / 2) - (largura / 2)
 y = (aj / 2) - (altura / 2) # Centraliza a Janela na Tela
 
 janela = f"{largura}x{altura}+{int(x)}+{int(y)}"
+
+
 
 
 def bem_vindo_f():
